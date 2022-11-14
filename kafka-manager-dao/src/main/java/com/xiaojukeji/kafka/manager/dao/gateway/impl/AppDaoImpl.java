@@ -1,8 +1,10 @@
 package com.xiaojukeji.kafka.manager.dao.gateway.impl;
 
+import com.xiaojukeji.kafka.manager.common.entity.pojo.AccountDO;
 import com.xiaojukeji.kafka.manager.common.entity.pojo.gateway.AppDO;
 import com.xiaojukeji.kafka.manager.dao.gateway.AppDao;
 import com.xiaojukeji.kafka.manager.task.Constant;
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,7 +39,9 @@ public class AppDaoImpl implements AppDao {
 
     @Override
     public List<AppDO> getByPrincipal(String principal) {
-        return sqlSession.selectList("AppDao.getByPrincipal", principal);
+        List<AppDO> doList = sqlSession.selectList("AppDao.getByPrincipal", principal);
+        doList = updateDisplayNames(doList);
+        return doList;
     }
 
     @Override
@@ -71,7 +75,21 @@ public class AppDaoImpl implements AppDao {
 
         Date afterTime = new Date(APP_CACHE_LATEST_UPDATE_TIME);
         List<AppDO> doList = sqlSession.selectList("AppDao.listAfterTime", afterTime);
+        doList = updateDisplayNames(doList);
         updateTopicCache(doList, timestamp);
+    }
+
+    private List<AppDO> updateDisplayNames(List<AppDO> appDOs){
+        for(int i = 0; i < appDOs.size(); i++){
+            String[] principalArray = appDOs.get(i).getPrincipals().split(",");
+            List<String> displayNameList = new ArrayList<>();
+            for(String username : principalArray){
+                AccountDO accountDO = sqlSession.selectOne("AccountDao.getByName", username);
+                displayNameList.add(accountDO.getDisplayName());
+            }
+            appDOs.get(i).setDisplayNames(StringUtils.join(displayNameList, ","));
+        }
+        return appDOs;
     }
 
     /**

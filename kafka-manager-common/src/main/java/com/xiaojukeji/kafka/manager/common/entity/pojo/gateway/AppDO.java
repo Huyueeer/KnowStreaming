@@ -30,6 +30,8 @@ public class AppDO {
 
     private Date modifyTime;
 
+    private String displayNames;
+
     public static String getAlphaNum() {
         return ALPHA_NUM;
     }
@@ -112,6 +114,14 @@ public class AppDO {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getDisplayNames() {
+        return displayNames;
+    }
+
+    public void setDisplayNames(String displayNames) {
+        this.displayNames = displayNames;
     }
 
     @Override

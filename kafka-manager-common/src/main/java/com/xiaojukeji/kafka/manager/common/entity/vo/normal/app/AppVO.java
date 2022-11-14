@@ -27,6 +27,9 @@ public class AppVO {
     @ApiModelProperty(value="App负责人")
     private String principals;
 
+    @ApiModelProperty(value="App负责人displayName")
+    private String displayNames;
+
     public String getAppId() {
         return appId;
     }
@@ -73,6 +76,14 @@ public class AppVO {
 
     public void setPrincipals(String principals) {
         this.principals = principals;
+    }
+
+    public String getDisplayNames() {
+        return displayNames;
+    }
+
+    public void setDisplayNames(String displayNames) {
+        this.displayNames = displayNames;
     }
 
     @Override

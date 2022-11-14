@@ -72,8 +72,8 @@ export class CommonAppList extends SearchAndFilterContainer {
         },
       }, {
         title: '负责人',
-        dataIndex: 'principals',
-        key: 'principals',
+        dataIndex: 'displayNames',
+        key: 'displayNames',
         width: '25%',
         onCell: () => ({
           style: {
