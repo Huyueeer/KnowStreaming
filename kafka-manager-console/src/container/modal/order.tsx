@@ -65,7 +65,7 @@ export const showApprovalModal = (info: IOrderInfo, status: number, from?: strin
   }, {
     key: 'retentionTime',
     label: '保存时间（/小时）',
-    defaultValue: '12',
+    defaultValue: '168',
     type: 'input_number',
     // options: [{
     //   label: '12小时',
